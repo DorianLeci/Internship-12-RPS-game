@@ -5,26 +5,25 @@
 }
 
 body{
-    background: #EEAECA;
-    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    background: var(--website-bg);
+    background: var(--website-bg-gradient);
 }
 
 .toast-wrapper{
     display: flex;
     justify-content: center;
     position: fixed;
-    top: 10px;   
+    top: 50px;   
     width: 100%;
 }
 
 .toast{
-    display: none;
     padding: 12px 24px;
     border-radius: 5px;
     font-size: 18px;   
     color: white;
     font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--button-bg-color);
 }
 
 .button-container{
@@ -43,8 +42,13 @@ body{
     font-size: 2rem;
     font-weight: bold;
     color: white;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--button-bg-color);
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button-container button:hover{
+    background-color: var(--button-bg-color-lights);
 }
 
 .success{
@@ -55,16 +59,7 @@ body{
     background-color: rgba(134, 40, 22, 0.7);
 }
 
-.visible{
-    display: block;
-}
-
 .hidden{
     display: none;
 }
 
-@media (min-width: 480px){
-    .toast{
-
-    }
-}

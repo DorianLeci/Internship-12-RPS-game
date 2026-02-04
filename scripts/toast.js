@@ -1,16 +1,19 @@
-export function showToast(message,type="error",duration=3000){
-    const toast=document.querySelector(".toast");
+export function showToast(message,type="error",duration=2000){
 
-    toast.classList.toggle("success",type==="success");
-    toast.classList.toggle("error",type==="error");
+    return new Promise(resolve=>{
+        const toast=document.querySelector(".toast");
 
-    toast.textContent=message;
+        toast.classList.toggle("success",type==="success");
+        toast.classList.toggle("error",type==="error");
 
-    toast.classList.add("visible");
-    toast.classList.remove("hidden");
+        toast.textContent=message;
 
-    setTimeout(()=>{
-        toast.classList.remove("visible");
-        toast.classList.add("hidden");
-    },duration);
+        toast.classList.remove("hidden");
+
+        setTimeout(()=>{
+            toast.classList.add("hidden");
+            resolve();
+        },duration);        
+    });
+
 }

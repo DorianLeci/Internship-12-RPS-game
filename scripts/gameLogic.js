@@ -1,6 +1,5 @@
 import { createRound } from "./api.js";
 import { generateGameId,getRandomMove } from "./helpers.js";
-import { showToast } from "./toast.js";
 
 const ROUND_NUMBER=5;
 
@@ -22,10 +21,7 @@ export async function createGame(){
         }
         const createdRound=await createRound(payload);
 
-        if(createdRound===null){
-            showToast("Network error. Try again");
-            return;
-        }
+        if(createdRound===null) return false;
 
         roundIdList.push(createdRound.id);
 
@@ -36,6 +32,6 @@ export async function createGame(){
         }
 
         localStorage.setItem("lastGame",JSON.stringify(gameState));
-        showToast("Game successfuly created","success");
+        return true;
     }
 }
