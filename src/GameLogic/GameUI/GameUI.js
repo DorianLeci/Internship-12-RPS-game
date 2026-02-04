@@ -1,11 +1,16 @@
-import { Game } from "../Game/Game.js";
+
 import { DisplaySwitch } from "../../helpers/DisplaySwitch.js";
-import { Menu } from "../Menu/Menu.js";
+import { Game } from "../Game/Game.js";
+import { Menu } from "../../components/Menu/Menu.js";
+import { Toast } from "../../components/Toast/Toast.js";
+import { Header } from "../../components/Header/Header.js";
 
 export class GameUI {
     constructor() {
         this.game = Game.load();
         this.menu = new Menu(".menu");
+        this.toast=new Toast(".toast-wrapper");
+        this.header=new Header(".game-header");        
         this.showInitialMenu();
         this.addEventListeners();
     }
@@ -21,11 +26,11 @@ export class GameUI {
         const isGameCreated=await Game.createNewGame();
 
         if(!isGameCreated){
-            await this.showToast("Network error. Try again");
+            await this.toast.showToast("Network error. Try again");
             return;
         }
         if(isGameCreated){
-            await this.showToast("Game successfuly created","success");
+            await this.toast.showToast("Game successfuly created","success");
 
             DisplaySwitch.hideElement(this.menu.continueBtn);
             DisplaySwitch.hideElement(this.menu.createBtn);
@@ -45,25 +50,6 @@ export class GameUI {
         this.menu.root.addEventListener("continueGame",()=>this.continueGame());
     }
 
-
-    async showToast(message,type="error",duration=2000){
-
-    return new Promise(resolve=>{
-        const toast=document.querySelector(".toast");
-
-        toast.classList.toggle("success",type==="success");
-        toast.classList.toggle("error",type==="error");
-
-        toast.textContent=message;
-
-        toast.classList.remove("hidden");
-
-        setTimeout(()=>{
-            toast.classList.add("hidden");
-            resolve();
-        },duration);        
-    });
-
-}    
+    
 
 }
