@@ -5,19 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/variables.css"/>    
     <link rel="stylesheet" href="/style/style.css"/>
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
 </head>
-<body></body>
-    <div class="toast-wrapper">
-        <div class="toast hidden"></div>
+<body>
+    <div class="body-wrapper">
+        <header class="game-header">
+            <h1 class="game-title">Rock Paper Scissors</h1>
+            <div class="game-icon-container">
+                <img class="game-icon" src="/assets/misc-pet-rock.svg" alt="rock"/>
+                <img class="game-icon" src="/assets/crumpled-paper.svg" alt="crumpled paper"/>    
+                <img class="game-icon" src="/assets/scissors.svg" alt="scissors"/>                
+            </div>
+        </header>
+        <div class="toast-wrapper">
+            <div class="toast hidden"></div>
+        </div>
+        <div class="button-container">
+            <button class="create-game-button">Create Game</button>
+            <button class="start-game-button hidden">Start Game</button>
+            <button class="continue-game-button hidden">Continue Game</button>
+        </div>
     </div>
-
-    <div class="button-container">
-        <button class="create-game-button">Create Game</button>
-        <button class="start-game-button hidden">Start Game</button>
-        <button class="continue-game-button">Continue Game</button>
-    </div>
-
     <script src="/scripts/main.js" type="module"></script>
 </body>
 </html>

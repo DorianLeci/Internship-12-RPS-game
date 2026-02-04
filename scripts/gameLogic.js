@@ -3,35 +3,66 @@ import { generateGameId,getRandomMove } from "./helpers.js";
 
 const ROUND_NUMBER=5;
 
-export async function createGame(){
-    const gameId=generateGameId();
-    const roundIdList=[];
+export class Game{
+    constructor(gameId,currentRoundIndex=0,roundIdList){
+        this.gameId=gameId;
+        this.roundIdList=roundIdList ?? [];
+        this.currentRoundIndex=currentRoundIndex;
+    }
 
-    for(let i=1;i<=ROUND_NUMBER;i++){
+    static async createNewGame(){
+        const roundIdList=[];
 
-        const payload={
-            name: "rps-round",
-            data:{
-                gameId,
-                round: i,
-                playerMove:"pending",
-                botMove: getRandomMove(),
-                result: "pending"
+        for(let i=1;i<=ROUND_NUMBER;i++){
+
+            const payload={
+                name: "rps-round",
+                data:{
+                    gameId:this.gameId,
+                    round: i,
+                    playerMove:"pending",
+                    botMove: getRandomMove(),
+                    result: "pending"
+                }
             }
+            const createdRound=await createRound(payload);
+
+            if(createdRound===null) return false;
+
+            roundIdList.push(createdRound.id);
         }
-        const createdRound=await createRound(payload);
 
-        if(createdRound===null) return false;
+        const game=new Game(generateGameId(),roundIdList,0);
 
-        roundIdList.push(createdRound.id);
+        game.save();
+        return game;
+    }
 
+    save(){
         const gameState={
-            gameId,
-            roundIdList,
-            currentRoundIndex: 0
+            gameId:this.gameId,
+            roundIdList: this.roundIdList,
+            currentRoundIndex: this.currentRoundIndex
+        }    
+        
+        localStorage.setItem("lastGame",JSON.stringify(gameState));        
+    }
+
+    static load(){
+        try{
+            const gameState=JSON.parse(localStorage.getItem("lastGame"));
+            if(!gameState) return null;
+
+            return new Game(gameState.gameId,gameState.roundIdList,gameState.currentRoundIndex);
+        }
+        catch(error){
+            console.error("Error: ",error);
+            return null;
         }
 
-        localStorage.setItem("lastGame",JSON.stringify(gameState));
-        return true;
+    }
+
+    isFinished(){
+        return this.currentRoundIndex>=this.roundIdList.length
     }
 }
