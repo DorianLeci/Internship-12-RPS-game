@@ -1,5 +1,5 @@
-import { createRound } from "./api.js";
-import { generateGameId,getRandomMove } from "./helpers.js";
+import { createRound } from "../../api/api.js";
+import { Generator } from "../../helpers/Generator.js";
 
 const ROUND_NUMBER=5;
 
@@ -21,7 +21,7 @@ export class Game{
                     gameId:this.gameId,
                     round: i,
                     playerMove:"pending",
-                    botMove: getRandomMove(),
+                    botMove: Generator.getRandomMove(),
                     result: "pending"
                 }
             }
@@ -32,7 +32,7 @@ export class Game{
             roundIdList.push(createdRound.id);
         }
 
-        const game=new Game(generateGameId(),roundIdList,0);
+        const game=new Game(Generator.generateGameId(),roundIdList,0);
 
         game.save();
         return game;

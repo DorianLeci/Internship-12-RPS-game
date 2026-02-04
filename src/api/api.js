@@ -18,8 +18,7 @@ export async function createRound(payload){
         // return data;
 
         const id = Math.random().toString(36).substr(2, 9);
-
-        // runda
+        
         const round = {
             id,
             createdAt: new Date().toISOString(),

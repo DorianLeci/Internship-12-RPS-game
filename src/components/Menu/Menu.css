@@ -1,0 +1,23 @@
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.menu button{
+    padding: 12px 24px;
+    width:300px;
+    border: 2px solid white;
+    border-radius: 8px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    background-color: var(--button-bg-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.menu button:hover{
+    background-color: var(--button-bg-color-lights);
+}
