@@ -2,6 +2,7 @@ export class PlayerSide{
     constructor(container){
         this.root=container;
         this.render();
+        this.dispatchEvents();
     }
 
     render() {
@@ -10,27 +11,35 @@ export class PlayerSide{
 
     static markup() {
         return `
-            <div class="player-side__info">
-                <img class="player-side__image" src="/assets/user.svg" alt="user"/>    
-                <span class="player-side__title">You</span>                            
+            <div class="arena-side__info">
+                <img class="arena-side__image" src="/assets/user.svg" alt="user"/>    
+                <span class="arena-side__title">You</span>                            
             </div>                
-            <div class="player-side__choices">    
-                <img class="player-side__choice" src="/assets/misc-pet-rock.svg" alt="Rock" data-move="rock"/>
-                <img class="player-side__choice" src="/assets/crumpled-paper.svg" alt="Paper" data-move="paper"/>
-                <img class="player-side__choice" src="/assets/scissors.svg" alt="Scissors" data-move="scissors"/>
+            <div class="arena-side__choices">  
+                <div class="arena-side__choice" data-move="rock">
+                    <img src="/assets/misc-pet-rock.svg" alt="rock" />
+                    <div class="marker"></div> 
+                </div>
+                <div class="arena-side__choice" data-move="paper">
+                    <img src="/assets/crumpled-paper.svg" alt="paper" />
+                    <div class="marker"></div>
+                </div>
+                <div class="arena-side__choice" data-move="scissors">
+                    <img src="/assets/scissors.svg" alt="scissors" />
+                    <div class="marker"></div>
+                </div>
             </div>
         `;
     }    
     
     dispatchEvents(){
 
-        const choiceElements=this.root.querySelectorAll(".player-side__choice");
+        const choiceElements=this.root.querySelectorAll(".arena-side__choice");
 
-        choiceElements.foreach(choiceEl=>{
+        choiceElements.forEach(choiceEl=>{
             choiceEl.addEventListener("click",(e)=>
                 {
                     this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: e.currentTarget.dataset.move}))
-
                 });
         })
     }

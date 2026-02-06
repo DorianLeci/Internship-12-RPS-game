@@ -3,4 +3,5 @@
     --website-bg-gradient: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
     --button-bg-color:  rgba(0, 0, 0, 0.4);
     --button-bg-color-light: rgba(0,0,0,0.6);
+    --shadow-transparent: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }

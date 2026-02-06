@@ -1,32 +1,32 @@
 export async function createRound(payload){
     try{
-        // const response=await fetch("https://api.restful-api.dev/objects",{
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type":"application/json"
-        //     },
-        //     body: JSON.stringify(payload)
-        // }
-        // );
+        const response=await fetch("https://api.restful-api.dev/objects",{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(payload)
+        }
+        );
 
-        // if(!response.ok){
-        //     throw new Error(`HTTP error ${response.status} (${response.statusText}) while creating game round`);
-        // }
+        if(!response.ok){
+            throw new Error(`HTTP error ${response.status} (${response.statusText}) while creating game round`);
+        }
 
-        // const data=await response.json();
-        // console.log(data);
-        // return data;
+        const data=await response.json();
+        console.log(data);
+        return data;
 
-        const id = Math.random().toString(36).substr(2, 9);
+        // const id = Math.random().toString(36).substr(2, 9);
         
-        const round = {
-            id,
-            createdAt: new Date().toISOString(),
-            name: payload.name,
-            data: payload.data
-        };        
+        // const round = {
+        //     id,
+        //     createdAt: new Date().toISOString(),
+        //     name: payload.name,
+        //     data: payload.data
+        // };        
 
-        return round;
+        // return round;
     }
 
     catch(error){

@@ -17,7 +17,11 @@ export class Arena{
 
     async playRound(playerChoice){
 
-        const roundId=this.game.roundIdList[this.currentRoundIndex];
+        console.log("Play round");
+        const roundId=this.game.roundIdList[this.game.currentRoundIndex];
+
+        console.log("lista: ",this.game.roundIdList);
+        console.log("Index: ",this.game.currentRoundIndex);
 
         const currentRound=await fetchRound(roundId);
 

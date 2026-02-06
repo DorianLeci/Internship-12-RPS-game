@@ -1,0 +1,97 @@
+.arena{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.versus-icon{
+    width: 80px;
+    aspect-ratio: 1/1;
+    align-self: center;
+}
+
+.arena-side{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.arena-side__info{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.arena-side__image{
+    width: 120px;
+    aspect-ratio: 1/1;
+}
+
+.arena-side__title{
+    align-self: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    text-shadow: var(--shadow-transparent);
+}
+
+.arena-side__choices{
+    display: flex;
+    padding: 10px;
+    border-radius: 20px;
+    background: linear-gradient(
+        to bottom,
+        var(--button-bg-color) 50%,
+        transparent 100%
+    );
+    box-shadow: var(--shadow-transparent);
+}
+
+.arena-side__choice{
+    position: relative;
+    transition: transform 0.3s ease-in;  
+    cursor: pointer;  
+}
+
+.arena-side__choice img{
+    display: block;
+    width: 100px;
+    aspect-ratio: 1/1;
+}
+
+.arena-side__choice:hover{
+    transform: scale(1.02);
+}
+
+.marker {
+    position: absolute;
+    bottom: 0px;
+    left: 50px;
+    width: 80px;
+    height: 5px;
+    background-color: aqua;
+    z-index: -1;
+    opacity: 0;
+    transform: translate(-50%, 50%);
+}
+
+.arena-side__choice:hover .marker{
+    animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn{
+    0% {
+        transform: translate(-70%,50%);
+        opacity: 0;
+    }
+
+    100%{
+        transform: translate(-50%, 50%);
+        opacity: 1;
+    }
+}
+
+
+
+

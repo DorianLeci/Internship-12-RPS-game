@@ -4,7 +4,7 @@ import { Generator } from "../../helpers/Generator.js";
 const ROUND_NUMBER=5;
 
 export class Game{
-    constructor(gameId,currentRoundIndex=0,roundIdList){
+    constructor(gameId,roundIdList,currentRoundIndex=0){
         this.gameId=gameId;
         this.roundIdList=roundIdList ?? [];
         this.currentRoundIndex=currentRoundIndex;

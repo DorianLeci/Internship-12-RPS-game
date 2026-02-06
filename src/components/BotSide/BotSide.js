@@ -10,8 +10,11 @@ export class BotSide{
 
     static markup() {
         return `
-            <img class="bot-side__image"/>
-            <div class="bot-side__choice">
+            <div class="arena-side__info">
+                <img class="arena-side__image" src="/assets/robot-bot-icon.svg"/>     
+                <span class="arena-side__title">Computer</span>       
+            </div>
+            <div class="arena-side__choices hidden"></div>
         `;
     }        
 }

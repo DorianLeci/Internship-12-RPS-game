@@ -1,27 +1,18 @@
 .player-side{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-}
-
-.player-side__choices{
-    display: flex;
-    justify-content: center;
-}
-
-.player-side__choice{
-    width: 100px;
-    aspect-ratio: 1/1;
-}
-
-.player-side__image{
-    width: 120px;
-    aspect-ratio: 1/1;
+    gap: 1.5rem;
 }
 
 .player-side__info{
     display: flex;
     justify-content: center;
+    width: 100%;
+}
+
+.player-side__image{
+    width: 120px;
+    aspect-ratio: 1/1;
 }
 
 .player-side__title{
@@ -30,3 +21,22 @@
     font-size: 32px;
     font-weight: bold;
 }
+
+.player-side__choices{
+    display: flex;
+    padding: 10px;
+    border-radius: 20px;
+    background: linear-gradient(
+        to bottom,
+        var(--button-bg-color) 50%,
+        transparent 100%
+    );
+}
+
+.player-side__choice{
+    width: 100px;
+    aspect-ratio: 1/1;
+}
+
+
+
