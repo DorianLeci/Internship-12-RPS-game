@@ -11,6 +11,8 @@ export class Game{
     }
 
     static async createNewGame(){
+
+        const gameId=Generator.generateGameId();
         const roundIdList=[];
 
         for(let i=1;i<=ROUND_NUMBER;i++){
@@ -18,8 +20,7 @@ export class Game{
             const payload={
                 name: "rps-round",
                 data:{
-                    gameId:this.gameId,
-                    round: i,
+                    gameId,
                     playerMove:"pending",
                     botMove: Generator.getRandomMove(),
                     result: "pending"
@@ -27,12 +28,12 @@ export class Game{
             }
             const createdRound=await createRound(payload);
 
-            if(createdRound===null) return false;
+            if(createdRound===null) return null;
 
             roundIdList.push(createdRound.id);
         }
 
-        const game=new Game(Generator.generateGameId(),roundIdList,0);
+        const game=new Game(gameId,roundIdList,0);
 
         game.save();
         return game;

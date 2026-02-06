@@ -10,7 +10,7 @@ export async function createRound(payload){
         // );
 
         // if(!response.ok){
-        //     throw new Error("HTTP error!");
+        //     throw new Error(`HTTP error ${response.status} (${response.statusText}) while creating game round`);
         // }
 
         // const data=await response.json();
@@ -34,5 +34,25 @@ export async function createRound(payload){
         return null;
     }
 
+}
 
+export async function fetchRound(roundId){
+    try{
+        const response=await fetch(`https://api.restful-api.dev/objects/${roundId}`,{
+            method: "GET"
+        }
+        );
+
+        if(!response.ok){
+            throw new Error(`HTTP error ${response.status} (${response.statusText}) while fetching roundId: ${roundId}`);
+        }
+
+        const data=await response.json();
+        return data;
+    }
+
+    catch(error){
+        console.error(error);
+        return null;
+    }
 }

@@ -4,6 +4,7 @@ import { Game } from "../Game/Game.js";
 import { Menu } from "../../components/Menu/Menu.js";
 import { Toast } from "../../components/Toast/Toast.js";
 import { Header } from "../../components/Header/Header.js";
+import { Arena } from "../../components/Arena/Arena.js";
 
 export class GameUI {
     constructor() {
@@ -23,22 +24,31 @@ export class GameUI {
     }
 
     async handleCreateGame(){
-        const isGameCreated=await Game.createNewGame();
+        const newGame=await Game.createNewGame();
 
-        if(!isGameCreated){
+        if(!newGame){
             await this.toast.showToast("Network error. Try again");
             return;
         }
-        if(isGameCreated){
-            await this.toast.showToast("Game successfuly created","success");
+        
+        await this.toast.showToast("Game successfuly created","success");
 
-            DisplaySwitch.hideElement(this.menu.continueBtn);
-            DisplaySwitch.hideElement(this.menu.createBtn);
-            DisplaySwitch.showElement(this.menu.startBtn);
-        }
+        DisplaySwitch.hideElement(this.menu.continueBtn);
+        DisplaySwitch.hideElement(this.menu.createBtn);
+        DisplaySwitch.showElement(this.menu.startBtn);
+            
+        this.game=newGame;
     }
 
     startGame() {
+        this.arena=new Arena(this.game,document.querySelector(".arena"));
+        
+        setTimeout(()=>{
+            DisplaySwitch.hideElement(this.menu.root);
+            DisplaySwitch.hideElement(this.header.root);
+            DisplaySwitch.showElement(this.arena.arenaElement);
+        },2000);
+
     }
 
     continueGame() {

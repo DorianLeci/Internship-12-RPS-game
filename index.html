@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/style/variables.css"/>
-    <link rel="stylesheet" href="src/style/style.css"/>
     <link rel="stylesheet" href="/src/components/Header/Header.css"/>    
     <link rel="stylesheet" href="/src/components/Menu/Menu.css"/>
     <link rel="stylesheet" href="/src/components/Toast/Toast.css"/>
+    <link rel="stylesheet" href="/src/components/PlayerSide/PlayerSide.css"/>
+    <link rel="stylesheet" href="src/style/style.css"/>    
     <title>Rock Paper Scissors</title>
 </head>
 <body>
@@ -15,6 +16,12 @@
         <header class="game-header"></header>
         <div class="toast-wrapper"></div>
         <div class="menu"></div>
+        <div class="arena hidden">
+            <div class="player-side"></div>
+            <div class="bot-side"></div>
+            </div>
+
+        </div>
     </div>
     <script src="main.js" type="module"></script>
 </body>

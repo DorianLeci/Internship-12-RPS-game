@@ -1,0 +1,32 @@
+.player-side{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.player-side__choices{
+    display: flex;
+    justify-content: center;
+}
+
+.player-side__choice{
+    width: 100px;
+    aspect-ratio: 1/1;
+}
+
+.player-side__image{
+    width: 120px;
+    aspect-ratio: 1/1;
+}
+
+.player-side__info{
+    display: flex;
+    justify-content: center;
+}
+
+.player-side__title{
+    align-self: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
