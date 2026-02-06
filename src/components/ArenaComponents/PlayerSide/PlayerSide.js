@@ -7,6 +7,7 @@ export class PlayerSide{
 
     render() {
         this.root.innerHTML = PlayerSide.markup();
+        this.choiceContainer=this.root.querySelector(".arena-side__choices");
     }
 
     static markup() {
@@ -15,7 +16,7 @@ export class PlayerSide{
                 <img class="arena-side__image" src="/assets/user.svg" alt="user"/>    
                 <span class="arena-side__title">You</span>                            
             </div>                
-            <div class="arena-side__choices">  
+            <div class="arena-side__choices transparent-bg">  
                 <div class="arena-side__choice" data-move="rock">
                     <img src="/assets/misc-pet-rock.svg" alt="rock" />
                     <div class="marker"></div> 
@@ -33,14 +34,26 @@ export class PlayerSide{
     }    
     
     dispatchEvents(){
-
-        const choiceElements=this.root.querySelectorAll(".arena-side__choice");
-
-        choiceElements.forEach(choiceEl=>{
-            choiceEl.addEventListener("click",(e)=>
-                {
-                    this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: e.currentTarget.dataset.move}))
-                });
-        })
+        this.choiceContainer.addEventListener("click",(e)=>
+            {
+                const chosenEl=e.target.closest(".arena-side__choice");
+                if(!chosenEl) return;
+                this.handlePlayerChoice(chosenEl);
+            });
     }
+
+    handlePlayerChoice(chosenEl){
+        const choiceElements=this.choiceContainer.querySelectorAll(".arena-side__choice");
+
+        choiceElements.forEach(element => {
+            if(element!==chosenEl)
+                element.classList.add("fadeout");
+            
+            else element.classList.add("selected");
+        });
+
+        this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: chosenEl.dataset.move}));
+    }
+
+
 }

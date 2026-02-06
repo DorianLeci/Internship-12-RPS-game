@@ -14,7 +14,7 @@ export class BotSide{
                 <img class="arena-side__image" src="/assets/robot-bot-icon.svg"/>     
                 <span class="arena-side__title">Computer</span>       
             </div>
-            <div class="arena-side__choices hidden"></div>
+            <div class="arena-side__choices hidden transparent-bg"></div>
         `;
     }        
 }

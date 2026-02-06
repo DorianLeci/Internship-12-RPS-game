@@ -4,7 +4,7 @@ import { Game } from "../Game/Game.js";
 import { Menu } from "../../components/Menu/Menu.js";
 import { Toast } from "../../components/Toast/Toast.js";
 import { Header } from "../../components/Header/Header.js";
-import { Arena } from "../../components/Arena/Arena.js";
+import { Arena } from "../../components/ArenaComponents/Arena/Arena.js";
 
 export class GameUI {
     constructor() {

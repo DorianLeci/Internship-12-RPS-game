@@ -1,0 +1,9 @@
+.arena__round-info{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 28px;
+    text-shadow: var(--shadow-transparent);
+}

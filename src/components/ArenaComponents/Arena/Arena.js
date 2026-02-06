@@ -1,4 +1,5 @@
-import { fetchRound } from "../../api/api.js";
+import { fetchRound } from "../../../api/api.js";
+import { ArenaRoundInfo } from "../ArenaRoundInfo/ArenaRoundInfo.js";
 import { BotSide } from "../BotSide/BotSide.js";
 import { PlayerSide } from "../PlayerSide/PlayerSide.js";
 
@@ -12,6 +13,9 @@ export class Arena{
     init(){
         this.playerSide=new PlayerSide(this.arenaElement.querySelector(".player-side"));
         this.botSide=new BotSide(this.arenaElement.querySelector(".bot-side"));
+        this.arenaRoundInfo=new ArenaRoundInfo(this.arenaElement.querySelector(".arena__round-info"));
+
+        this.arenaRoundInfo.updateCounter(this.game.currentRoundIndex);
         this.addEventListeners();
     }
 

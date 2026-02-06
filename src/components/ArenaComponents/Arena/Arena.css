@@ -50,8 +50,18 @@
 
 .arena-side__choice{
     position: relative;
-    transition: transform 0.3s ease-in;  
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;  
     cursor: pointer;  
+}
+
+.arena-side__choice.fadeout{
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.arena-side__choice.selected{
+    transform: scale(1.05);
 }
 
 .arena-side__choice img{
@@ -62,6 +72,10 @@
 
 .arena-side__choice:hover{
     transform: scale(1.02);
+}
+
+.arena-side__choice.selected:hover{
+    transform: scale(1.10);
 }
 
 .marker {
