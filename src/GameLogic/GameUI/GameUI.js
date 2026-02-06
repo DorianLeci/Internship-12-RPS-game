@@ -40,15 +40,15 @@ export class GameUI {
         this.game=newGame;
     }
 
-    startGame() {
-        this.arena=new Arena(this.game,document.querySelector(".arena"));
-        
+    startGame() {        
         setTimeout(()=>{
+            this.arena=new Arena(this.game,document.querySelector(".arena"));     
+                    
             DisplaySwitch.hideElement(this.menu.root);
             DisplaySwitch.hideElement(this.header.root);
-            DisplaySwitch.showElement(this.arena.arenaElement);
+            DisplaySwitch.showElement(this.arena.arenaElement);              
         },2000);
-
+    
     }
 
     continueGame() {

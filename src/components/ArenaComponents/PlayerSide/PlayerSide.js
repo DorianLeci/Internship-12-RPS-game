@@ -38,22 +38,23 @@ export class PlayerSide{
             {
                 const chosenEl=e.target.closest(".arena-side__choice");
                 if(!chosenEl) return;
-                this.handlePlayerChoice(chosenEl);
+                this.handlePlayerChoice(chosenEl.dataset.move);
+                this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: chosenEl.dataset.move}));                
             });
     }
 
-    handlePlayerChoice(chosenEl){
+    handlePlayerChoice(move){
         const choiceElements=this.choiceContainer.querySelectorAll(".arena-side__choice");
 
         choiceElements.forEach(element => {
-            if(element!==chosenEl)
+            if(element.dataset.move!==move)
                 element.classList.add("fadeout");
             
             else element.classList.add("selected");
         });
 
-        this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: chosenEl.dataset.move}));
     }
+
 
 
 }

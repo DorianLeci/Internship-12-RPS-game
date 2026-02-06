@@ -1,0 +1,14 @@
+.round-timer{
+    padding: 12px;
+    font-size: 20px;
+    width: 200px;
+    color: white;
+    text-shadow: var(--shadow-transparent);
+    text-align: center;
+    border-radius: 20px;       
+    background: var(--bg-transparent-green);
+}
+
+.alert{
+    background: var(--bg-transparent-red);
+}

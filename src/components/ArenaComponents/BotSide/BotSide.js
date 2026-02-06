@@ -15,6 +15,6 @@ export class BotSide{
                 <span class="arena-side__title">Computer</span>       
             </div>
             <div class="arena-side__choices hidden transparent-bg"></div>
-        `;
+        `;   
     }        
 }

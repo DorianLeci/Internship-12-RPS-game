@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 1.5rem;
 }
 
 .versus-icon{
@@ -24,7 +24,7 @@
 }
 
 .arena-side__image{
-    width: 120px;
+    width: 95px;
     aspect-ratio: 1/1;
 }
 
@@ -40,11 +40,7 @@
     display: flex;
     padding: 10px;
     border-radius: 20px;
-    background: linear-gradient(
-        to bottom,
-        var(--button-bg-color) 50%,
-        transparent 100%
-    );
+    background: var(--bg-transparent-dark);
     box-shadow: var(--shadow-transparent);
 }
 
@@ -66,7 +62,7 @@
 
 .arena-side__choice img{
     display: block;
-    width: 100px;
+    width: 80px;
     aspect-ratio: 1/1;
 }
 
@@ -81,30 +77,21 @@
 .marker {
     position: absolute;
     bottom: 0px;
-    left: 50px;
-    width: 80px;
+    left: 40px;
+    width: 60px;
     height: 5px;
     background-color: aqua;
     z-index: -1;
     opacity: 0;
-    transform: translate(-50%, 50%);
+    transform: translate(-70%, 50%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .arena-side__choice:hover .marker{
-    animation: slideIn 0.3s ease forwards;
+    opacity: 1;
+    transform: translate(-50%,50%);
 }
 
-@keyframes slideIn{
-    0% {
-        transform: translate(-70%,50%);
-        opacity: 0;
-    }
-
-    100%{
-        transform: translate(-50%, 50%);
-        opacity: 1;
-    }
-}
 
 
 

@@ -3,5 +3,23 @@
     --website-bg-gradient: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
     --button-bg-color:  rgba(0, 0, 0, 0.4);
     --button-bg-color-light: rgba(0,0,0,0.6);
+
     --shadow-transparent: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    --bg-transparent-green: linear-gradient(
+        to bottom,
+        rgba(6, 202, 94, 0.7) 45%,
+        transparent 100%
+    ); 
+
+    --bg-transparent-red: linear-gradient(
+        to bottom,
+        rgba(220, 22, 22, 0.7) 45%,
+        transparent 100%
+    ); 
+
+    --bg-transparent-dark: linear-gradient(
+        to bottom,
+        var(--button-bg-color) 50%,
+        transparent 100%
+    );
 }
