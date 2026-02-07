@@ -5,9 +5,9 @@
     --button-bg-color-light: rgba(0,0,0,0.6);
 
     --shadow-transparent: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    --overlay-color: rgba(0,0,0,0.9);
+
     --bg-transparent-green: rgba(6, 202, 94, 0.7);
-
-
     --bg-transparent-red:  rgba(220, 22, 22, 0.7);
 
     --bg-transparent-dark: linear-gradient(

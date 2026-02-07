@@ -40,13 +40,17 @@ export class PlayerSide{
     }    
     
     dispatchEvents(){
-        this.choiceContainer.addEventListener("click",(e)=>
-            {
+        this._onChoiceClick=(e)=>{
                 const chosenEl=e.target.closest(".arena-side__choice");
                 if(!chosenEl) return;
                 this.handlePlayerMoveChoice(chosenEl.dataset.move);
                 this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: chosenEl.dataset.move}));                
-            });
+        }
+        this.choiceContainer.addEventListener("click",this._onChoiceClick);
+    }
+
+    destroy(){
+        this.choiceContainer.removeEventListener("click", this._onChoiceClick);        
     }
 
     handlePlayerMoveChoice(move){

@@ -7,6 +7,7 @@ import { PlayerSide } from "../PlayerSide/PlayerSide.js";
 import { RoundTimer } from "../RoundTimer/RoundTimer.js";
 import { AudioPlayer } from "../../../Audio/AudioPlayer.js";
 import { ApiErrorHelper } from "../../../helpers/ApiErrorHelper.js";
+import { FinalResult } from "../FinalResult/FinalResult.js";
 
 export class Arena{
     constructor(game,toast,arenaElement,onReturnToMenu){
@@ -54,9 +55,9 @@ export class Arena{
             });
 
             setTimeout(async ()=>{
-                await this.updateScoreUI();                
+                const score=await this.updateScoreUI();                
                 AudioPlayer.playSound(matchOutcome);
-                await this.nextRound();
+                await this.nextRound(score);
             },500);
 
         }
@@ -69,13 +70,16 @@ export class Arena{
     }
 
     addEventListeners(){
-        this.playerSide.root.addEventListener("playerChoice",async (e)=>{
+        this._onPlayerChoice=async (e)=>{
             this.roundTimer.finish();
 
             const move=e.detail;
             await this.playRound(move);
-        });
-        this.roundTimer.root.addEventListener("timerFinished",async (e)=>{
+        }
+        this.playerSide.root.addEventListener("playerChoice",this._onPlayerChoice);
+
+
+        this._onTimerFinish=async (e)=>{
             this.roundTimer.finish();
 
             const move=e.detail;
@@ -83,7 +87,17 @@ export class Arena{
 
             await this.playRound(move);
 
-        });
+        }
+        this.roundTimer.root.addEventListener("timerFinished",this._onTimerFinish);
+    }    
+
+    destroy(){
+        this.playerSide.root.removeEventListener("playerChoice",this._onPlayerChoice);
+        this.roundTimer.root.removeEventListener("timerFinished",this._onTimerFinish);
+        this.roundTimer.stop();
+        this.playerSide.reset(); 
+        this.playerSide.destroy();
+        this.botSide.reset();        
     }    
 
     async updateScoreUI(){
@@ -114,6 +128,7 @@ export class Arena{
                 }
             });
             this.arenaRoundInfo.updateScore(score,rounds[this.game.currentRoundIndex].data.result);
+            return score;
         }
         catch(error){
             await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
@@ -121,21 +136,60 @@ export class Arena{
         }        
     }
 
-    nextRound(delay=3000){
+    nextRound(score,delay=3000){
         return new Promise((resolve)=>{
-            setTimeout(()=>{
-                this.game.currentRoundIndex++;
-                this.game.save();
+            setTimeout(async ()=>{
+                if(this.game.isFinished()){
+                    this.destroy();
+                    await this.showGameResult(score);
+                }
+                else{
+                    this.game.currentRoundIndex++;
+                    this.game.save();
 
-                this.roundTimer.reset();
-                this.playerSide.reset();
-                this.botSide.reset();
-                this.arenaRoundInfo.updateCounter(this.game.currentRoundIndex);
-                this.roundTimer.start();
+                    this.roundTimer.reset();
+                    this.playerSide.reset();
+                    this.botSide.reset();
+                    this.arenaRoundInfo.updateCounter(this.game.currentRoundIndex);
+                    this.roundTimer.start();
+                }
 
                 resolve();
             },delay);
         });
     }
+    
+    async showGameResult(score){
+        
+        let winnerText="Draw!";
+        let finalResult=matchResult.DRAW;
+
+        if(score.player>score.bot){
+            winnerText="You Win!";
+            finalResult=matchResult.PLAYER_WIN;
+        } 
+        else if(score.bot>score.player){
+            winnerText="You lose!";
+            finalResult=matchResult.BOT_WIN;
+        } 
+
+        const overlay=document.createElement("div");
+        overlay.classList.add("final-result__overlay");
+
+        this.arenaElement.appendChild(overlay);
+
+        this.finalResult=new FinalResult(overlay,score,winnerText);
+        this.finalResult.playSound(finalResult);
+
+        setTimeout(()=>{
+            overlay.classList.remove("visible");
+            overlay.addEventListener("transitionend",()=>{
+                overlay.remove();
+                this.onReturnToMenu();
+            });
+        },5000);
+    }
+
+
 
 }

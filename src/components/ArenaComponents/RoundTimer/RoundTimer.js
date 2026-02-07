@@ -32,7 +32,7 @@ export class RoundTimer{
                 this.root.classList.add("alert");
             }
             if(this.timeLeft<0){
-                
+                this.stop();
                 this.root.dispatchEvent(new CustomEvent("timerFinished",{
                     detail: Generator.getRandomMove()
                 }));

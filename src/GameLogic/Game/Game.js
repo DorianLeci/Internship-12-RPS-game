@@ -67,6 +67,6 @@ export class Game{
     }
 
     isFinished(){
-        return this.currentRoundIndex>=this.roundIdList.length
+        return this.currentRoundIndex===this.roundIdList.length-1;
     }
 }
