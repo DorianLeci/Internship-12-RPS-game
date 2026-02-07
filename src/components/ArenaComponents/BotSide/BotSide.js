@@ -16,7 +16,7 @@ export class BotSide{
 
     static markup() {
         return `
-            <div class="arena-side__info bot-side">
+            <div class="arena-side__info">
                 <img class="arena-side__image" src="/assets/robot-bot-icon.svg"/>     
                 <span class="arena-side__title">Computer</span>       
             </div>

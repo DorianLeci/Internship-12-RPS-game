@@ -7,8 +7,10 @@
     text-align: center;
     border-radius: 20px;       
     background: var(--bg-transparent-green);
+    box-shadow: var(--shadow-transparent);    
 }
 
 .alert{
     background: var(--bg-transparent-red);
+
 }

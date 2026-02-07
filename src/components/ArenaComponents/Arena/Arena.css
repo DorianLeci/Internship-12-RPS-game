@@ -2,13 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .versus-icon{
     width: 80px;
     aspect-ratio: 1/1;
-    align-self: center;
+    transform: translateY(10%);
 }
 
 .arena-side{
@@ -23,7 +23,7 @@
     width: 100%;
 }
 
-.bot-side .arena-side__choice{
+.locked .arena-side__choice{
     pointer-events: none;
     cursor: default;
 }

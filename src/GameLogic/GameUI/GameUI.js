@@ -40,14 +40,14 @@ export class GameUI {
         this.game=newGame;
     }
 
-    startGame() {        
-        setTimeout(()=>{
-            this.arena=new Arena(this.game,document.querySelector(".arena"));     
-                    
-            DisplaySwitch.hideElement(this.menu.root);
-            DisplaySwitch.hideElement(this.header.root);
-            DisplaySwitch.showElement(this.arena.arenaElement);              
-        },2000);
+    async startGame() {     
+        await this.toast.showToast("Game successfuly started","success");  
+                        
+        this.arena=new Arena(this.game,document.querySelector(".arena"));  
+                                
+        DisplaySwitch.hideElement(this.menu.root);
+        DisplaySwitch.hideElement(this.header.root);
+        DisplaySwitch.showElement(this.arena.arenaElement);              
     
     }
 
@@ -56,7 +56,7 @@ export class GameUI {
 
     addEventListeners(){
         this.menu.root.addEventListener("createGame",async ()=> await this.handleCreateGame());
-        this.menu.root.addEventListener("startGame",()=>this.startGame());
+        this.menu.root.addEventListener("startGame",async ()=>await this.startGame());
         this.menu.root.addEventListener("continueGame",()=>this.continueGame());
     }
 

@@ -5,6 +5,7 @@ import { ArenaRoundInfo } from "../ArenaRoundInfo/ArenaRoundInfo.js";
 import { BotSide } from "../BotSide/BotSide.js";
 import { PlayerSide } from "../PlayerSide/PlayerSide.js";
 import { RoundTimer } from "../RoundTimer/RoundTimer.js";
+import { AudioPlayer } from "../../../Audio/AudioPlayer.js";
 
 export class Arena{
     constructor(game,arenaElement){
@@ -34,10 +35,12 @@ export class Arena{
 
         if(!currentRound) return;        
 
-        console.log("Bot move: ",currentRound.botMove);
-        this.botSide.handleBotMoveChoice(currentRound.botMove);
+        this.botSide.handleBotMoveChoice(currentRound.data.botMove);
+        this.playerSide.lockPointerEvents();
 
-        const matchOutcome=DetermineWinner(playerMove,currentRound.botMove);
+        const matchOutcome=DetermineWinner(playerMove,currentRound.data.botMove);
+
+        setTimeout(()=>AudioPlayer.playSound(matchOutcome),500);
 
 
     }
@@ -90,6 +93,7 @@ export class Arena{
 
         this.arenaRoundInfo.updateScore(score);
     }
+
 
 
 }

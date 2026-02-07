@@ -53,4 +53,8 @@ export class PlayerSide{
         MoveChoice.handleMoveChoice(move,this.choiceContainer,PlayerSide.choiceElSelector);
     }
 
+    lockPointerEvents(){
+        this.root.classList.add("locked");
+    }
+
 }

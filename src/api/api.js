@@ -21,12 +21,15 @@ export async function createRound(payload){
         const id = Math.random().toString(36).substr(2, 9);
         const round = {
             id,
-            name: "rps-round",
-            gameId: payload.data.gameId,
-            playerMove: payload.data.playerMove,
-            botMove: payload.data.botMove,
-            result: payload.data.result,
-            createdAt: new Date().toISOString()
+            data:{
+                name: "rps-round",
+                gameId: payload.data.gameId,
+                playerMove: payload.data.playerMove,
+                botMove: payload.data.botMove,
+                result: payload.data.result,
+                createdAt: new Date().toISOString()
+            }
+
         };
 
         MOCK_ROUND_STORE.set(id, round);
