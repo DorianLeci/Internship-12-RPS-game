@@ -1,3 +1,5 @@
+import { matchResult } from "../../../Enums/MatchResult.js";
+
 export class ArenaRoundInfo{
     constructor(container){
         this.root=container;
@@ -11,9 +13,9 @@ export class ArenaRoundInfo{
 
     updateCounter(currentRoundIndex){
         this.counterEl.textContent=currentRoundIndex;
-        this.playerScoreEl = this.root.querySelector(".score-player");
-        this.botScoreEl = this.root.querySelector(".score-bot");
-        this.drawScoreEl = this.root.querySelector(".score-draw");
+        this.playerScoreValue = this.root.querySelector(".score-player .score__value")
+        this.botScoreValue = this.root.querySelector(".score-bot .score__value")
+        this.drawScoreValue = this.root.querySelector(".score-draw .score__value")
     }
 
     static markup(playerScore=0,botScore=0,drawScore=0) {
@@ -22,24 +24,42 @@ export class ArenaRoundInfo{
                <span class="round-info__counter"></span></h2>
 
                <div class="round-info__score">
-               <div class="score">
+               <div class="score score-player">
                     <span class="score__name">Player:</span> <span class="score__value"> ${playerScore}</span>               
                </div>
 
-               <div class="score">
+               <div class="score score-bot">
                     <span class="score__name">Bot:</span> <span class="score__value"> ${botScore}</span>               
                </div>
 
-               <div class="score">
+               <div class="score score-draw">
                <span class="score__name">Draw:</span> <span class="score__value"> ${drawScore}</span>
                </div>
                </div>
         `;
     }  
     
-    updateScore(score){
-        this.playerScoreEl.textContent=`Player: ${score.player}`;
-        this.botScoreEl.textContent=`Bot: ${score.bot}`;
-        this.drawScoreEl.textContent=`Draw: ${score.draw};`
+    updateScore(score,winner){
+
+        switch(winner){
+            case matchResult.PLAYER_WIN:
+                this.animateScore(this.playerScoreValue,score.player);
+                break;
+            
+            case matchResult.BOT_WIN:
+                this.animateScore(this.botScoreValue,score.bot);
+                break;
+
+            case matchResult.DRAW:
+                this.animateScore(this.drawScoreValue,score.draw);
+                break;
+        }
+    }
+
+    animateScore(element,newValue){
+        element.textContent=newValue;
+        element.classList.add("score-up");
+
+        setTimeout(()=>element.classList.remove("score-up"),1000);
     }
 }

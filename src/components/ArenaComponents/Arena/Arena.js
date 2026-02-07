@@ -11,13 +11,16 @@ import { Toast } from "../../Toast/Toast.js";
 import { DisplaySwitch } from "../../../helpers/DisplaySwitch.js";
 
 export class Arena{
-    constructor(game,arenaElement){
+    constructor(game,toast,arenaElement,onReturnToMenu){
         this.game=game; 
+        this.toast=toast;
         this.arenaElement=arenaElement;
+        this.onReturnToMenu=onReturnToMenu;
         this.init();
     }
 
     init(){
+        this.toast.root.classList.add("arena-toast-wrapper");
 
         this.playerSide=new PlayerSide(this.arenaElement.querySelector(".player-side"));
 
@@ -33,6 +36,7 @@ export class Arena{
     }
 
     async playRound(playerMove){
+        try{
             const roundId=this.game.roundIdList[this.game.currentRoundIndex];
             const currentRound=await getRound(roundId);
 
@@ -42,8 +46,6 @@ export class Arena{
             this.playerSide.lockPointerEvents();
 
             const matchOutcome=DetermineWinner(playerMove,currentRound.data.botMove);
-
-            setTimeout(()=>AudioPlayer.playSound(matchOutcome),500);
             
             const updatedRound=await updateRound(currentRound.id,{
                 data:{
@@ -51,8 +53,19 @@ export class Arena{
                     botMove: currentRound.data.botMove,
                     result: matchOutcome
                 }
-
             });
+            console.log("Updated round: ",updatedRound);
+
+            setTimeout(()=>{
+                AudioPlayer.playSound(matchOutcome);
+                this.updateScoreUI();
+            },500);
+        }
+        catch(error){
+            await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
+            this.onReturnToMenu();
+        }
+
 
     }
 
@@ -75,34 +88,40 @@ export class Arena{
     }    
 
     async updateScoreUI(){
+        try{
+            const rounds=await getAllRounds(this.game.gameId,this.game.roundIdList);
 
-        const rounds=await getAllRounds(this.game.gameId,this.game.roundIdList);
-
-        let score={
-            player: 0,
-            bot: 0,
-            draw: 0
-        }
-
-        rounds.forEach(round=>{
-            switch(round.result){
-                case matchResult.PLAYER_WIN:
-                    score.player++;
-                    break;
-                
-                case matchResult.BOT_WIN:
-                    score.bot++;
-                    break;
-                
-                case matchResult.DRAW:
-                    score.draw++;
-                    break;
-                default:
-                    break;
+            let score={
+                player: 0,
+                bot: 0,
+                draw: 0
             }
-        });
 
-        this.arenaRoundInfo.updateScore(score);
+            rounds.forEach(round=>{
+                switch(round.data.result){
+                    case matchResult.PLAYER_WIN:
+                        score.player++;
+                        break;
+                    
+                    case matchResult.BOT_WIN:
+                        score.bot++;
+                        break;
+                    
+                    case matchResult.DRAW:
+                        score.draw++;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            this.arenaRoundInfo.updateScore(score,rounds[this.game.currentRoundIndex].data.result);
+        }
+        catch(error){
+            await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
+            this.onReturnToMenu();
+        }        
+
+
     }
 
 }

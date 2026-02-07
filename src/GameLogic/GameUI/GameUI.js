@@ -52,15 +52,16 @@ export class GameUI {
     async startGame() {     
         try{
             await this.toast.showToast("Game successfuly started","success");  
-            this.toast.root.classList.add("arena-toast-wrapper");
-            this.arena=new Arena(this.game,document.querySelector(".arena"));  
+
+            this.arena=new Arena(this.game,this.toast,document.querySelector(".arena"),()=>this.returnToMainMenu());  
                                     
             DisplaySwitch.hideElement(this.menu.root);
+            DisplaySwitch.hideElement(this.menu.startBtn);
             DisplaySwitch.hideElement(this.header.root);
             DisplaySwitch.showElement(this.arena.arenaElement);   
         }
         catch(error){
-            await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
+
             this.returnToMainMenu();  
         }
            
@@ -80,6 +81,8 @@ export class GameUI {
         DisplaySwitch.hideElement(this.arena.arenaElement);
         DisplaySwitch.showElement(this.header.root);        
         DisplaySwitch.showElement(this.menu.root);
+        DisplaySwitch.showElement(this.menu.createBtn);
+        DisplaySwitch.showElement(this.menu.continueBtn);        
         this.toast.root.classList.remove("arena-toast-wrapper");        
     }
 
