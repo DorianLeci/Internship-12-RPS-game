@@ -1,9 +1,38 @@
 .arena__round-info{
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    width: 90%;
     margin-bottom: 20px;
     color: white;
     font-size: 20px;
     text-shadow: var(--shadow-transparent);
 }
+
+
+.round-info__counter,
+.score__value{
+    color: gold;
+    font-weight: bold;
+}
+
+.round-info__score{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+.score{
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;  
+}
+
+.score__name{
+    margin-right: 0.5rem;
+}
+
+

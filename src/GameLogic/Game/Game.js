@@ -1,5 +1,7 @@
 import { createRound } from "../../api/api.js";
+import { matchResult } from "../../Enums/MatchResult.js";
 import { Generator } from "../../helpers/Generator.js";
+import { Move } from "../../Enums/MoveEnum.js";
 
 const ROUND_NUMBER=5;
 
@@ -21,19 +23,20 @@ export class Game{
                 name: "rps-round",
                 data:{
                     gameId,
-                    playerMove:"pending",
+                    playerMove: Move.PENDING,
                     botMove: Generator.getRandomMove(),
-                    result: "pending"
+                    result: matchResult.PENDING
                 }
             }
+
             const createdRound=await createRound(payload);
 
             if(createdRound===null) return null;
 
             roundIdList.push(createdRound.id);
         }
-
         const game=new Game(gameId,roundIdList,0);
+   
 
         game.save();
         return game;

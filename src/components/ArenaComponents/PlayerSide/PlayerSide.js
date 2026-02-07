@@ -1,4 +1,10 @@
+import { MoveChoice } from "../../../helpers/MoveChoice.js";
+import { Move } from "../../../Enums/MoveEnum.js";
+
 export class PlayerSide{
+    static choiceContainerSelector=".arena-side__choices";
+    static choiceElSelector=".arena-side__choice";
+
     constructor(container){
         this.root=container;
         this.render();
@@ -7,7 +13,7 @@ export class PlayerSide{
 
     render() {
         this.root.innerHTML = PlayerSide.markup();
-        this.choiceContainer=this.root.querySelector(".arena-side__choices");
+        this.choiceContainer=this.root.querySelector(PlayerSide.choiceContainerSelector);
     }
 
     static markup() {
@@ -17,15 +23,15 @@ export class PlayerSide{
                 <span class="arena-side__title">You</span>                            
             </div>                
             <div class="arena-side__choices transparent-bg">  
-                <div class="arena-side__choice" data-move="rock">
+                <div class="arena-side__choice" data-move="${Move.ROCK}">
                     <img src="/assets/misc-pet-rock.svg" alt="rock" />
                     <div class="marker"></div> 
                 </div>
-                <div class="arena-side__choice" data-move="paper">
+                <div class="arena-side__choice" data-move="${Move.PAPER}">
                     <img src="/assets/crumpled-paper.svg" alt="paper" />
                     <div class="marker"></div>
                 </div>
-                <div class="arena-side__choice" data-move="scissors">
+                <div class="arena-side__choice" data-move="${Move.SCISSORS}">
                     <img src="/assets/scissors.svg" alt="scissors" />
                     <div class="marker"></div>
                 </div>
@@ -38,23 +44,13 @@ export class PlayerSide{
             {
                 const chosenEl=e.target.closest(".arena-side__choice");
                 if(!chosenEl) return;
-                this.handlePlayerChoice(chosenEl.dataset.move);
+                this.handlePlayerMoveChoice(chosenEl.dataset.move);
                 this.root.dispatchEvent(new CustomEvent("playerChoice",{detail: chosenEl.dataset.move}));                
             });
     }
 
-    handlePlayerChoice(move){
-        const choiceElements=this.choiceContainer.querySelectorAll(".arena-side__choice");
-
-        choiceElements.forEach(element => {
-            if(element.dataset.move!==move)
-                element.classList.add("fadeout");
-            
-            else element.classList.add("selected");
-        });
-
+    handlePlayerMoveChoice(move){
+        MoveChoice.handleMoveChoice(move,this.choiceContainer,PlayerSide.choiceElSelector);
     }
-
-
 
 }

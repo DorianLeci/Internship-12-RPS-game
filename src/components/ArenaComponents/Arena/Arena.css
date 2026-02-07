@@ -23,6 +23,11 @@
     width: 100%;
 }
 
+.bot-side .arena-side__choice{
+    pointer-events: none;
+    cursor: default;
+}
+
 .arena-side__image{
     width: 95px;
     aspect-ratio: 1/1;

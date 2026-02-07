@@ -34,10 +34,7 @@ export class RoundTimer{
                 this.root.classList.add("alert");
             }
             if(this.timeLeft<0){
-                this.stop();
-
-                this.counterEl.textContent="Move played";
-
+                
                 this.root.dispatchEvent(new CustomEvent("timerFinished",{
                     detail: Generator.getRandomMove()
                 }));
@@ -56,8 +53,17 @@ export class RoundTimer{
         this.counterEl.textContent=`${SECONDS_LEFT}`+this.timeLeft;
     }
 
+    setMovePlayedMsg(){
+        this.counterEl.textContent="Move played";
+    }
+
     stop(){
         clearInterval(this.interval);
+    }
+
+    finish(){
+        this.stop();
+        this.setMovePlayedMsg();
     }
 
 
