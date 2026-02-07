@@ -40,4 +40,8 @@ export class BotSide{
     handleBotMoveChoice(generatedMove){
         MoveChoice.handleMoveChoice(generatedMove,this.choiceContainer,BotSide.choiceElSelector);
     }    
+
+    reset(){
+        MoveChoice.resetMoveChoices(this.choiceContainer,BotSide.choiceElSelector);        
+    }
 }

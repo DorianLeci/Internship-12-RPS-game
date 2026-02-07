@@ -57,4 +57,9 @@ export class PlayerSide{
         this.root.classList.add("locked");
     }
 
+    reset(){
+        this.root.classList.remove("locked");
+        MoveChoice.resetMoveChoices(this.choiceContainer,PlayerSide.choiceElSelector);
+    }
+
 }

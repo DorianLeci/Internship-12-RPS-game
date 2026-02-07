@@ -8,6 +8,14 @@ export class MoveChoice{
             
             else element.classList.add("selected");
         });
+    }
 
+    static resetMoveChoices(container,selector){
+        const choiceElements=container.querySelectorAll(selector);
+
+        choiceElements.forEach(element => {
+            element.classList.remove("fadeout");
+            element.classList.remove("selected");
+        });        
     }
 }

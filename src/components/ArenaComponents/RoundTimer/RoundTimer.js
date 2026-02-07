@@ -24,8 +24,6 @@ export class RoundTimer{
     start(){
         this.timeLeft=this.duration;
 
-        console.log("this.duration: ",this.duration);
-
         this.interval=setInterval(()=>{
 
             this.timeLeft--;
@@ -42,15 +40,15 @@ export class RoundTimer{
                 return;
             }
 
-            this.updateDisplay();
+            this.updateDisplay(this.timeLeft);
 
 
 
         },1000);
     }
 
-    updateDisplay(){
-        this.counterEl.textContent=`${SECONDS_LEFT}`+this.timeLeft;
+    updateDisplay(timeLeft){
+        this.counterEl.textContent=`${SECONDS_LEFT}`+timeLeft;
     }
 
     setMovePlayedMsg(){
@@ -64,6 +62,11 @@ export class RoundTimer{
     finish(){
         this.stop();
         this.setMovePlayedMsg();
+    }
+
+    reset(){
+        this.updateDisplay(this.duration);
+        this.root.classList.remove("alert");        
     }
 
 

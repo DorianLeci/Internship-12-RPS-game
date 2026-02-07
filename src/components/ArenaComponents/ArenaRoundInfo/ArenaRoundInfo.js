@@ -12,7 +12,7 @@ export class ArenaRoundInfo{
     }
 
     updateCounter(currentRoundIndex){
-        this.counterEl.textContent=currentRoundIndex;
+        this.counterEl.textContent=currentRoundIndex+1;
         this.playerScoreValue = this.root.querySelector(".score-player .score__value")
         this.botScoreValue = this.root.querySelector(".score-bot .score__value")
         this.drawScoreValue = this.root.querySelector(".score-draw .score__value")
@@ -40,7 +40,6 @@ export class ArenaRoundInfo{
     }  
     
     updateScore(score,winner){
-
         switch(winner){
             case matchResult.PLAYER_WIN:
                 this.animateScore(this.playerScoreValue,score.player);

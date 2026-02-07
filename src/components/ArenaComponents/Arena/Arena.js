@@ -7,8 +7,6 @@ import { PlayerSide } from "../PlayerSide/PlayerSide.js";
 import { RoundTimer } from "../RoundTimer/RoundTimer.js";
 import { AudioPlayer } from "../../../Audio/AudioPlayer.js";
 import { ApiErrorHelper } from "../../../helpers/ApiErrorHelper.js";
-import { Toast } from "../../Toast/Toast.js";
-import { DisplaySwitch } from "../../../helpers/DisplaySwitch.js";
 
 export class Arena{
     constructor(game,toast,arenaElement,onReturnToMenu){
@@ -54,12 +52,13 @@ export class Arena{
                     result: matchOutcome
                 }
             });
-            console.log("Updated round: ",updatedRound);
 
-            setTimeout(()=>{
+            setTimeout(async ()=>{
+                await this.updateScoreUI();                
                 AudioPlayer.playSound(matchOutcome);
-                this.updateScoreUI();
+                await this.nextRound();
             },500);
+
         }
         catch(error){
             await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
@@ -120,8 +119,23 @@ export class Arena{
             await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
             this.onReturnToMenu();
         }        
+    }
 
+    nextRound(delay=3000){
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                this.game.currentRoundIndex++;
+                this.game.save();
 
+                this.roundTimer.reset();
+                this.playerSide.reset();
+                this.botSide.reset();
+                this.arenaRoundInfo.updateCounter(this.game.currentRoundIndex);
+                this.roundTimer.start();
+
+                resolve();
+            },delay);
+        });
     }
 
 }
