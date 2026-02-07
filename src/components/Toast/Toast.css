@@ -14,6 +14,14 @@
     font-weight: bold;
 }
 
+.toast-wrapper.arena-toast-wrapper{
+    top: 10px;
+}
+
+.arena-toast-wrapper .toast.error{
+    background:  rgb(220, 22, 22);
+}
+
 .success{
     background: var(--bg-transparent-green);
     box-shadow: var(--shadow-transparent);

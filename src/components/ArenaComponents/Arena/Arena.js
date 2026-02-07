@@ -1,4 +1,4 @@
-import { fetchRound, getAllRounds } from "../../../api/api.js";
+import { getRound, getAllRounds, updateRound } from "../../../api/api.js";
 import { matchResult } from "../../../Enums/MatchResult.js";
 import { DetermineWinner } from "../../../helpers/DetermineWinner.js";
 import { ArenaRoundInfo } from "../ArenaRoundInfo/ArenaRoundInfo.js";
@@ -6,6 +6,9 @@ import { BotSide } from "../BotSide/BotSide.js";
 import { PlayerSide } from "../PlayerSide/PlayerSide.js";
 import { RoundTimer } from "../RoundTimer/RoundTimer.js";
 import { AudioPlayer } from "../../../Audio/AudioPlayer.js";
+import { ApiErrorHelper } from "../../../helpers/ApiErrorHelper.js";
+import { Toast } from "../../Toast/Toast.js";
+import { DisplaySwitch } from "../../../helpers/DisplaySwitch.js";
 
 export class Arena{
     constructor(game,arenaElement){
@@ -15,6 +18,7 @@ export class Arena{
     }
 
     init(){
+
         this.playerSide=new PlayerSide(this.arenaElement.querySelector(".player-side"));
 
         this.botSide=new BotSide(this.arenaElement.querySelector(".bot-side"));
@@ -29,19 +33,26 @@ export class Arena{
     }
 
     async playRound(playerMove){
+            const roundId=this.game.roundIdList[this.game.currentRoundIndex];
+            const currentRound=await getRound(roundId);
 
-        const roundId=this.game.roundIdList[this.game.currentRoundIndex];
-        const currentRound=await fetchRound(roundId);
+            if(!currentRound) return;        
 
-        if(!currentRound) return;        
+            this.botSide.handleBotMoveChoice(currentRound.data.botMove);
+            this.playerSide.lockPointerEvents();
 
-        this.botSide.handleBotMoveChoice(currentRound.data.botMove);
-        this.playerSide.lockPointerEvents();
+            const matchOutcome=DetermineWinner(playerMove,currentRound.data.botMove);
 
-        const matchOutcome=DetermineWinner(playerMove,currentRound.data.botMove);
+            setTimeout(()=>AudioPlayer.playSound(matchOutcome),500);
+            
+            const updatedRound=await updateRound(currentRound.id,{
+                data:{
+                    playerMove,
+                    botMove: currentRound.data.botMove,
+                    result: matchOutcome
+                }
 
-        setTimeout(()=>AudioPlayer.playSound(matchOutcome),500);
-
+            });
 
     }
 
@@ -93,7 +104,5 @@ export class Arena{
 
         this.arenaRoundInfo.updateScore(score);
     }
-
-
 
 }
