@@ -4,7 +4,7 @@
     color: white;
     background: var(--bg-transparent-dark);
     border:none;
-    border-radius: 20px;
+    border-radius: var(--main-radius);
     box-shadow: var(--shadow-transparent);
     cursor: pointer;
 }
@@ -19,7 +19,7 @@
     color: white;
     background: var(--bg-transparent-dark);
     border:none;
-    border-radius: 20px;
+    border-radius: var(--main-radius);
     box-shadow: var(--shadow-transparent);
 }
 

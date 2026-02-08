@@ -1,13 +1,13 @@
 import { matchResult } from "../../../Enums/MatchResult.js";
 
 export class ArenaRoundInfo{
-    constructor(container){
+    constructor(container,score){
         this.root=container;
-        this.render();
+        this.render(score);
     }
 
-    render() {
-        this.root.innerHTML = ArenaRoundInfo.markup();
+    render(score) {
+        this.root.innerHTML = ArenaRoundInfo.markup(score);
         this.counterEl=this.root.querySelector(".round-info__counter");
     }
 
@@ -18,22 +18,22 @@ export class ArenaRoundInfo{
         this.drawScoreValue = this.root.querySelector(".score-draw .score__value")
     }
 
-    static markup(playerScore=0,botScore=0,drawScore=0) {
+    static markup(score) {
         return `
                <h2 class="round-info__title">Round
                <span class="round-info__counter"></span></h2>
 
                <div class="round-info__score">
                <div class="score score-player">
-                    <span class="score__name">Player:</span> <span class="score__value"> ${playerScore}</span>               
+                    <span class="score__name">Player:</span> <span class="score__value"> ${score.player}</span>               
                </div>
 
                <div class="score score-bot">
-                    <span class="score__name">Bot:</span> <span class="score__value"> ${botScore}</span>               
+                    <span class="score__name">Bot:</span> <span class="score__value"> ${score.bot}</span>               
                </div>
 
                <div class="score score-draw">
-               <span class="score__name">Draw:</span> <span class="score__value"> ${drawScore}</span>
+               <span class="score__name">Draw:</span> <span class="score__value"> ${score.draw}</span>
                </div>
                </div>
         `;

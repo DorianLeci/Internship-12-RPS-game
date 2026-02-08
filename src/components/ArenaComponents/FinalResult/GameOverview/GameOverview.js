@@ -69,6 +69,6 @@ export class GameOverview{
     }
 
     destroy(){
-        this.closeOverlayBtn.removeEventListener("click",this._onButtonClick);
+        if(this.closeOverlayBtn)this.closeOverlayBtn.removeEventListener("click",this._onButtonClick);
     }
 }

@@ -15,7 +15,6 @@ export class Arena{
         this.toast=toast;
         this.arenaElement=arenaElement;
         this.onReturnToMenu=onReturnToMenu;
-        this.currentScore={player: 0,bot: 0,draw:0};
         this.init();
     }
 
@@ -29,7 +28,7 @@ export class Arena{
         this.roundTimer=new RoundTimer(this.arenaElement.querySelector(".round-timer"));
         this.roundTimer.start();
 
-        this.arenaRoundInfo=new ArenaRoundInfo(this.arenaElement.querySelector(".arena__round-info"));
+        this.arenaRoundInfo=new ArenaRoundInfo(this.arenaElement.querySelector(".arena__round-info"),this.game.score);
         this.arenaRoundInfo.updateCounter(this.game.currentRoundIndex);
 
         this.addEventListeners();
@@ -46,7 +45,13 @@ export class Arena{
             this.playerSide.lockPointerEvents();
 
             const matchOutcome=DetermineWinner(playerMove,currentRound.data.botMove);
-            
+
+            setTimeout(async ()=>{
+                await this.updateScoreUI(matchOutcome);   
+                AudioPlayer.playSound(matchOutcome); 
+            },200)
+
+
             const updatedRound=await updateRound(currentRound.id,{
                 data:{
                     gameId: this.game.gameId,
@@ -55,16 +60,13 @@ export class Arena{
                     result: matchOutcome
                 }
             });
-
-            setTimeout(async ()=>{
-                await this.updateScoreUI(matchOutcome);                
-                AudioPlayer.playSound(matchOutcome);
-                await this.nextRound();
-            },500);
+                
+            await this.nextRound();
 
         }
         catch(error){
-            await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg));   
+            await ApiErrorHelper.handleApiError(error,async (msg)=>await this.toast.showToast(msg)); 
+            this.destroy();  
             this.onReturnToMenu();
         }
 
@@ -103,26 +105,22 @@ export class Arena{
     }    
 
     async updateScoreUI(matchOutcome){
-        switch (matchOutcome) {
-            case matchResult.PLAYER_WIN: this.currentScore.player++; break;
-            case matchResult.BOT_WIN: this.currentScore.bot++; break;
-            case matchResult.DRAW: this.currentScore.draw++; break;
-        }
-        this.arenaRoundInfo.updateScore(this.currentScore,matchOutcome);
-            
+        this.game.updateScore(matchOutcome);
+        this.arenaRoundInfo.updateScore(this.game.score,matchOutcome);
     }
 
-    nextRound(delay=3000){
+    nextRound(delay=2000){
         return new Promise((resolve)=>{
             setTimeout(async ()=>{
+
+                this.game.toNextRound();
+                this.game.save();          
+
                 if(this.game.isFinished()){
                     this.destroy();
                     await this.showGameResult();
                 }
-                else{
-                    this.game.currentRoundIndex++;
-                    this.game.save();
-
+                else{                        
                     this.roundTimer.reset();
                     this.playerSide.reset();
                     this.botSide.reset();
@@ -136,15 +134,16 @@ export class Arena{
     }
     
     async showGameResult(){
-        
+
+        const score=this.game.score;
         let winnerText="Draw!";
         let finalResult=matchResult.DRAW;
 
-        if(this.currentScore.player>this.currentScore.bot){
+        if(score.player>score.bot){
             winnerText="You Win!";
             finalResult=matchResult.PLAYER_WIN;
         } 
-        else if(this.currentScore.bot>this.currentScore.player){
+        else if(score.bot>score.player){
             winnerText="You lose!";
             finalResult=matchResult.BOT_WIN;
         } 
@@ -154,7 +153,13 @@ export class Arena{
 
         this.arenaElement.appendChild(overlay);
 
-        this.finalResult=new FinalResult(overlay,this.currentScore,winnerText,this.game.roundIdList.length,()=>this.onReturnToMenu());
+        this.finalResult=new FinalResult(
+            overlay,
+            score,
+            winnerText,
+            this.game.roundIdList.length,
+            ()=>this.onReturnToMenu());
+
         this.finalResult.playSound(finalResult);
 
         this.finalResult.setupGameReview(this.game.gameId,this.game.roundIdList,this.toast);

@@ -7,10 +7,10 @@
 }
 .menu button{
     padding: 12px 24px;
-    width:300px;
+    width: clamp(300px, 50vw, 400px);
     border: 2px solid white;
-    border-radius: 8px;
-    font-size: 2rem;
+    border-radius: var(--main-radius);
+    font-size: clamp(2rem,2.5vw,40px);
     font-weight: bold;
     color: white;
     background-color: var(--button-bg-color);

@@ -6,10 +6,11 @@ import { Move } from "../../Enums/MoveEnum.js";
 const ROUND_NUMBER=5;
 
 export class Game{
-    constructor(gameId,roundIdList,currentRoundIndex=0){
+    constructor(gameId,roundIdList,currentRoundIndex=0,score){
         this.gameId=gameId;
         this.roundIdList=roundIdList ?? [];
         this.currentRoundIndex=currentRoundIndex;
+        this.score=score;
     }
 
     static async createNewGame(){
@@ -35,7 +36,7 @@ export class Game{
 
             roundIdList.push(createdRound.id);
         }
-        const game=new Game(gameId,roundIdList,0);
+        const game=new Game(gameId,roundIdList,0,{player: 0, bot:0, draw: 0});
    
 
         game.save();
@@ -46,7 +47,8 @@ export class Game{
         const gameState={
             gameId:this.gameId,
             roundIdList: this.roundIdList,
-            currentRoundIndex: this.currentRoundIndex
+            currentRoundIndex: this.currentRoundIndex,
+            score: this.score
         }    
         
         localStorage.setItem("lastGame",JSON.stringify(gameState));        
@@ -57,7 +59,9 @@ export class Game{
             const gameState=JSON.parse(localStorage.getItem("lastGame"));
             if(!gameState) return null;
 
-            return new Game(gameState.gameId,gameState.roundIdList,gameState.currentRoundIndex);
+            console.log("Game stat score: ",gameState.score);
+
+            return new Game(gameState.gameId,gameState.roundIdList,gameState.currentRoundIndex,gameState.score);
         }
         catch(error){
             console.error("Error: ",error);
@@ -67,6 +71,26 @@ export class Game{
     }
 
     isFinished(){
-        return this.currentRoundIndex===this.roundIdList.length-1;
+        return this.currentRoundIndex===this.roundIdList.length;
     }
+
+    toNextRound(){
+        this.currentRoundIndex++;
+    }
+
+    updateScore(winner){
+        switch(winner){
+            case matchResult.PLAYER_WIN:
+                this.score.player++;
+                break;
+            
+            case matchResult.BOT_WIN:
+                this.score.bot++;
+                break;
+
+            case matchResult.DRAW:
+                this.score.draw++;
+                break;
+        }
+    }    
 }

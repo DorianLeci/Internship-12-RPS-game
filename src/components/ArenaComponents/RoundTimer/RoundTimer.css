@@ -5,7 +5,7 @@
     color: white;
     text-shadow: var(--shadow-transparent);
     text-align: center;
-    border-radius: 20px;       
+    border-radius: var(--main-radius);      
     background: var(--bg-transparent-green);
     box-shadow: var(--shadow-transparent);    
 }

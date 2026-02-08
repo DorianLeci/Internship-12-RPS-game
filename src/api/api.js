@@ -24,22 +24,22 @@ export async function createRound(payload){
 
     return await response.json();
 
-        // const id = Math.random().toString(36).substr(2, 9);
-        // const round = {
-        //     id,
-        //     data:{
-        //         name: "rps-round",
-        //         gameId: payload.data.gameId,
-        //         playerMove: payload.data.playerMove,
-        //         botMove: payload.data.botMove,
-        //         result: payload.data.result,
-        //         createdAt: new Date().toISOString()
-        //     }
+        const id = Math.random().toString(36).substr(2, 9);
+        const round = {
+            id,
+            data:{
+                name: "rps-round",
+                gameId: payload.data.gameId,
+                playerMove: payload.data.playerMove,
+                botMove: payload.data.botMove,
+                result: payload.data.result,
+                createdAt: new Date().toISOString()
+            }
 
-        // };
+        };
 
-        // MOCK_ROUND_STORE.set(id, round);
-        // return round;
+        MOCK_ROUND_STORE.set(id, round);
+        return round;
 }
 
 export async function getRound(roundId){
@@ -56,8 +56,7 @@ export async function getRound(roundId){
         throw ApiError.getRoundError(response.status,roundId);
 
     return await response.json();
-        
-        // return MOCK_ROUND_STORE.get(roundId);
+    return MOCK_ROUND_STORE.get(roundId);
 }
 
 
@@ -82,6 +81,7 @@ export async function getAllRounds(gameId,roundList){
         // const rounds = Array.from(MOCK_ROUND_STORE.values())
         //     .filter(round => roundList.includes(round.id) && round.data.gameId === gameId);
 
+        //     throw new Error("Error");
         // return rounds;        
 
 }
@@ -106,16 +106,16 @@ export async function updateRound(roundId,payload){
 
     return await response.json();
 
-    //     const round = MOCK_ROUND_STORE.get(roundId);
-    // if(!round) throw ApiError.updateRoundError(404, roundId);
+        const round = MOCK_ROUND_STORE.get(roundId);
+    if(!round) throw ApiError.updateRoundError(404, roundId);
 
-    // const updated = {
-    //     ...round,
-    //     data: {
-    //         ...round.data,
-    //         ...payload.data
-    //     }
-    // };
-    // MOCK_ROUND_STORE.set(roundId, updated);
-    // return updated;
+    const updated = {
+        ...round,
+        data: {
+            ...round.data,
+            ...payload.data
+        }
+    };
+    MOCK_ROUND_STORE.set(roundId, updated);
+    return updated;
 }

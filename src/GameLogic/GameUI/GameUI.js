@@ -5,7 +5,6 @@ import { Menu } from "../../components/Menu/Menu.js";
 import { Toast } from "../../components/Toast/Toast.js";
 import { Header } from "../../components/Header/Header.js";
 import { Arena } from "../../components/ArenaComponents/Arena/Arena.js";
-import { ApiError } from "../../error/ApiError.js";
 import { ApiErrorHelper } from "../../helpers/ApiErrorHelper.js";
 
 export class GameUI {
@@ -50,31 +49,32 @@ export class GameUI {
     }
 
     async startGame() {     
-        try{
-            await this.toast.showToast("Game successfuly started","success");  
+        await this.toast.showToast("Game successfuly started","success");  
 
-            this.arena=new Arena(this.game,this.toast,document.querySelector(".arena"),()=>this.returnToMainMenu());  
+        this.game.currentRoundIndex = 0;
+        this.game.score = { player:0, bot:0, draw:0};
+        this.game.save();
+        this.arena=new Arena(this.game,this.toast,document.querySelector(".arena"),()=>this.returnToMainMenu());  
                                     
-            DisplaySwitch.hideElement(this.menu.root);
-            DisplaySwitch.hideElement(this.menu.startBtn);
-            DisplaySwitch.hideElement(this.header.root);
-            DisplaySwitch.showElement(this.arena.arenaElement);   
-        }
-        catch(error){
-
-            this.returnToMainMenu();  
-        }
-           
-    
+        DisplaySwitch.hideElement(this.menu.root);
+        DisplaySwitch.hideElement(this.menu.startBtn);
+        DisplaySwitch.hideElement(this.header.root);
+        DisplaySwitch.showElement(this.arena.arenaElement);       
     }
 
-    continueGame() {
+    async continueGame() {
+        await this.toast.showToast("Game successfuly continued","success");     
+        this.arena=new Arena(this.game,this.toast,document.querySelector(".arena"),()=>this.returnToMainMenu()); 
+
+        DisplaySwitch.hideElement(this.menu.root);
+        DisplaySwitch.hideElement(this.header.root);
+        DisplaySwitch.showElement(this.arena.arenaElement);          
     }
 
     addEventListeners(){
         this.menu.root.addEventListener("createGame",async ()=> await this.handleCreateGame());
         this.menu.root.addEventListener("startGame",async ()=>await this.startGame());
-        this.menu.root.addEventListener("continueGame",()=>this.continueGame());
+        this.menu.root.addEventListener("continueGame",async ()=>await this.continueGame());
     }
 
     returnToMainMenu(){
@@ -82,7 +82,10 @@ export class GameUI {
         DisplaySwitch.showElement(this.header.root);        
         DisplaySwitch.showElement(this.menu.root);
         DisplaySwitch.showElement(this.menu.createBtn);
-        DisplaySwitch.showElement(this.menu.continueBtn);        
+
+        if(this.game.isFinished())
+            DisplaySwitch.hideElement(this.menu.continueBtn);  
+
         this.toast.root.classList.remove("arena-toast-wrapper");        
     }
 

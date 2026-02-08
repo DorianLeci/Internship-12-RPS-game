@@ -15,4 +15,6 @@
         var(--button-bg-color) 50%,
         transparent 100%
     );
+
+    --main-radius: 20px;
 }

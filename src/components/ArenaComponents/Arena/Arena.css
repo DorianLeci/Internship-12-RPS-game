@@ -44,7 +44,7 @@
 .arena-side__choices{
     display: flex;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: var(--main-radius);
     background: var(--bg-transparent-dark);
     box-shadow: var(--shadow-transparent);
 }

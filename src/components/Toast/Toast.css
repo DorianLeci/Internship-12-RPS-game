@@ -8,14 +8,14 @@
 
 .toast{
     padding: 20px;
-    border-radius: 20px;
-    font-size: 18px;   
+    border-radius: var(--main-radius);
+    font-size: clamp(20px,2vw,24px);   
     color: white;
     font-weight: bold;
 }
 
 .toast-wrapper.arena-toast-wrapper{
-    top: 10px;
+    top: 28px;
 }
 
 .arena-toast-wrapper .toast.error{
