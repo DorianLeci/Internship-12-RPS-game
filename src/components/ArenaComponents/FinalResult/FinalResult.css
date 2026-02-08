@@ -5,9 +5,14 @@
     width:100%;
     height:100vh;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     opacity: 0;
-    background: var(--overlay-color);
+    background-color: var(--website-bg);
+    background: var(--website-bg-gradient);
     pointer-events: none;
+
     transition: opacity 0.5s ease;
 }
 
@@ -26,17 +31,33 @@
     animation: popIn 0.6s;
 }
 
-.final-result__text{
-    color: gold;
-    font-weight: bold;
-    font-size: 64px;
+.final-result__front{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
-.final-result__score{
-    color: white;
-    font-size: 32px;
-    margin-bottom: 8px;
+.final-result__overview{
+    height: 80%;
+    padding: 30px 10px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
+.final-result__overview::-webkit-scrollbar {
+    display: none;
+}
+
+
+.final-result__text{
+    color: white;
+    font-weight: bold;
+    font-size: 64px;
+    text-shadow: var(--shadow-transparent);
+}
+
 @keyframes popIn{
     0%{
         transform: scale(0.8);

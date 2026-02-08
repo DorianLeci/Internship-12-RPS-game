@@ -1,4 +1,6 @@
 import { AudioPlayer } from "../../../Audio/AudioPlayer.js";
+import { DisplaySwitch } from "../../../helpers/DisplaySwitch.js";
+import { GameOverview } from "./GameOverview/GameOverview.js";
 
 export class FinalResult{
     constructor(container,finalScore,finalResultText){
@@ -9,23 +11,39 @@ export class FinalResult{
     render(score,resultText){
         this.root.innerHTML=FinalResult.markup(score,resultText);
         this.root.getBoundingClientRect();        
-        this.root.classList.add("visible");        
+        this.root.classList.add("visible");   
+        this.overviewBtn=this.root.querySelector(".game-overview-button");     
     }
 
     static markup(score,resultText){
         return `
-            <div class="final-result__content">        
-                <h1 class="final-result__text">${resultText}</h1>
-                <div class="score-container">
-                    <p class="final-result__score">Player: ${score.player}</p>
-                    <p class="final-result__score">Bot: ${score.bot}</p>
-                    <p class="final-result__score">Draw: ${score.draw}</p>
-                </div>
+            <div class="final-result__content">  
+                <div class="final-result__front">
+                    <h1 class="final-result__text">${resultText}</h1>
+                    <button class="game-overview-button">Game Overview</button>                
+                </div>      
+                <div class="final-result__overview hidden"></div>
+
             </div>
         `;
     }
 
     playSound(finalResult){
         AudioPlayer.playSound(finalResult,true);
+    }
+
+    setupGameReview(gameId,roundIdList,toast){
+        const front=this.root.querySelector(".final-result__front");
+
+        this._onButtonClick= async()=>{
+            const overviewContainer=this.root.querySelector(".final-result__overview");
+            this.overview=new GameOverview(overviewContainer,gameId,roundIdList,toast,()=>DisplaySwitch.showElement(front));  
+            
+            DisplaySwitch.hideElement(front);
+            DisplaySwitch.showElement(this.overview.root);
+            await this.overview.renderGameReview();
+        }
+
+        this.overviewBtn.addEventListener("click",this._onButtonClick);
     }
 }

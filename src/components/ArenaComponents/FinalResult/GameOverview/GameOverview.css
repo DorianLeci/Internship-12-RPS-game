@@ -1,0 +1,76 @@
+.game-overview-button{
+    padding: 10px;
+    font-size: 32px;
+    color: white;
+    background: var(--bg-transparent-dark);
+    border:none;
+    border-radius: 20px;
+    box-shadow: var(--shadow-transparent);
+    cursor: pointer;
+}
+
+.overview-list li{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 32px;
+    padding: 5px 20px;
+    color: white;
+    background: var(--bg-transparent-dark);
+    border:none;
+    border-radius: 20px;
+    box-shadow: var(--shadow-transparent);
+}
+
+.round-number{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.round-number span{
+    cursor: pointer;
+}
+
+.move-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.move-container div{
+    display: flex;
+    gap: 4px;
+}
+
+.move-container div span{
+    align-self: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: var(--shadow-transparent);
+}
+
+.move-container img{
+    width: 64px;
+    aspect-ratio: 1/1;
+}
+
+.close-overlay {
+    position: absolute;
+    top: 5px;  
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 48px;
+    color: white;
+    cursor: pointer;
+    z-index: 1050; 
+    transition: transform 0.2s;
+}
+
+.close-overlay:hover {
+    transform: scale(1.2); 
+}
+
+
