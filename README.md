@@ -6,7 +6,7 @@
 
 ```
 git clone https://github.com/DorianLeci/Internship-12-RPS-GAME.git
-cd Internship-11-JS1
+cd Internship-12-RPS-GAME
 ```
 
 You can open index.html by opening it in browser as file or through VS Code extension <b>LiveServer</b>.
