@@ -65,7 +65,7 @@ export class FinalResult{
     destroy(){
         this.overviewBtn.removeEventListener("click",this._onOverviewButtonClick);
         this.closeOverlayBtn.removeEventListener("click",this._onCloseOverlayBtnClick);
-        this.overview.destroy();
+        if(this.overview)this.overview.destroy();
         this.root.remove();
     }
 }

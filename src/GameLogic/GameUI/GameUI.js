@@ -51,8 +51,6 @@ export class GameUI {
     async startGame() {     
         await this.toast.showToast("Game successfuly started","success");  
 
-        this.game.currentRoundIndex = 0;
-        this.game.score = { player:0, bot:0, draw:0};
         this.game.save();
         this.arena=new Arena(this.game,this.toast,document.querySelector(".arena"),()=>this.returnToMainMenu());  
                                     
@@ -85,6 +83,7 @@ export class GameUI {
 
         if(this.game.isFinished())
             DisplaySwitch.hideElement(this.menu.continueBtn);  
+        else DisplaySwitch.showElement(this.menu.continueBtn);
 
         this.toast.root.classList.remove("arena-toast-wrapper");        
     }

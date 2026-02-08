@@ -81,7 +81,6 @@ export async function getAllRounds(gameId,roundList){
         // const rounds = Array.from(MOCK_ROUND_STORE.values())
         //     .filter(round => roundList.includes(round.id) && round.data.gameId === gameId);
 
-        //     throw new Error("Error");
         // return rounds;        
 
 }

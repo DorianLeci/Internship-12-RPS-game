@@ -38,8 +38,6 @@ export class Game{
         }
         const game=new Game(gameId,roundIdList,0,{player: 0, bot:0, draw: 0});
    
-
-        game.save();
         return game;
     }
 

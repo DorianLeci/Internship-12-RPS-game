@@ -7,10 +7,10 @@
 }
 .menu button{
     padding: 12px 24px;
-    width: clamp(300px, 50vw, 400px);
+    width: clamp(300px, 50vw, 450px);
     border: 2px solid white;
     border-radius: var(--main-radius);
-    font-size: clamp(2rem,2.5vw,40px);
+    font-size: clamp(2rem,3vw,48px);
     font-weight: bold;
     color: white;
     background-color: var(--button-bg-color);
@@ -21,3 +21,4 @@
 .menu button:hover{
     background-color: var(--button-bg-color-lights);
 }
+

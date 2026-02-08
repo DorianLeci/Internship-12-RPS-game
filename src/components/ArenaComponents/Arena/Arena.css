@@ -5,6 +5,15 @@
     gap: 1rem;
 }
 
+.arena-side-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.arena-side-wrapper .versus-icon{
+    align-self: center;
+}
 .versus-icon{
     width: 80px;
     aspect-ratio: 1/1;
@@ -43,10 +52,8 @@
 
 .arena-side__choices{
     display: flex;
+    justify-content: center;
     padding: 10px;
-    border-radius: var(--main-radius);
-    background: var(--bg-transparent-dark);
-    box-shadow: var(--shadow-transparent);
 }
 
 .arena-side__choice{
@@ -82,7 +89,7 @@
 .marker {
     position: absolute;
     bottom: 0px;
-    left: 40px;
+    left: 50%;
     width: 60px;
     height: 5px;
     background-color: aqua;
@@ -97,6 +104,43 @@
     transform: translate(-50%,50%);
 }
 
+@media (min-width: 1000px) {
+    .arena-side-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 2rem;
+        width: 100%;
+        max-width: 1100px;
+        padding: 0px 20px;
+        margin: 0 auto;
+    }
+
+    .arena-side__image{
+        width: clamp(120px,10vw,150px);
+    }
+
+    .arena-side__title{
+        font-size: clamp(32px,2.5vw,40px);
+    }    
+
+    .versus-icon {
+        width: 100px;
+    }
+
+    .arena-side__choices{
+        width: fit-content;
+        justify-content: center;
+    }
+    .arena-side__choice img {
+        width: clamp(100px, 10vw, 130px);
+    }
+
+    .marker{
+        width: clamp(60px,9vw,100px);
+    }
+
+}
 
 
 

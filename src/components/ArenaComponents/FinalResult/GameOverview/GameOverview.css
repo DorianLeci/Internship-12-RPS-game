@@ -23,6 +23,10 @@
     box-shadow: var(--shadow-transparent);
 }
 
+.overview-list li:last-child {
+    margin-bottom: 12px;
+}
+
 .round-number{
     font-size: 24px;
     font-weight: bold;
@@ -71,6 +75,36 @@
 
 .close-overlay:hover {
     transform: scale(1.2); 
+}
+
+@media (min-width:1000px){
+    .overview-list{
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+
+    .overview-list li{
+        padding: 10px 20px;
+    }
+    .overview-list li:last-child {
+        margin-bottom: 32px;
+    }
+
+    .round-number span{
+        font-size: clamp(24px,2.3vw,32px);
+    }
+
+    .move-container div span{
+        font-size: clamp(20px,1.5vw,24px);
+    }
+
+    .player-move img,
+    .bot-move img{
+        width: clamp(72px,7vw,90px);
+    }
+
 }
 
 

@@ -12,5 +12,13 @@
 
 .alert{
     background: var(--bg-transparent-red);
+}
 
+@media (min-width:1000px){
+    .round-timer{
+        width: fit-content;
+    }
+    .round-timer span{
+        font-size: 24px;
+    }
 }

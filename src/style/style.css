@@ -24,7 +24,7 @@ body{
 
 .transparent-bg{
     padding: 10px;
-    border-radius: 20px;
+    border-radius: var(--main-radius);
     background: linear-gradient(
         to bottom,
         var(--button-bg-color) 50%,
