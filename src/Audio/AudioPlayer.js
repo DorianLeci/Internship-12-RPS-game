@@ -22,4 +22,5 @@ export class AudioPlayer{
 
         sound.play().catch(err=>console.error(err));
     }
+
 }

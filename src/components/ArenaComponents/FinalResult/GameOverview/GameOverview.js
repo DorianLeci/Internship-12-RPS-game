@@ -67,4 +67,8 @@ export class GameOverview{
 
         this.closeOverlayBtn.addEventListener("click",this._onButtonClick);
     }
+
+    destroy(){
+        this.closeOverlayBtn.removeEventListener("click",this._onButtonClick);
+    }
 }

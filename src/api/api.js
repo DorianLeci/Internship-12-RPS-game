@@ -105,4 +105,17 @@ export async function updateRound(roundId,payload){
         throw ApiError.updateRoundError(response.status,roundId);
 
     return await response.json();
+
+    //     const round = MOCK_ROUND_STORE.get(roundId);
+    // if(!round) throw ApiError.updateRoundError(404, roundId);
+
+    // const updated = {
+    //     ...round,
+    //     data: {
+    //         ...round.data,
+    //         ...payload.data
+    //     }
+    // };
+    // MOCK_ROUND_STORE.set(roundId, updated);
+    // return updated;
 }

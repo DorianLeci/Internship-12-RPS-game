@@ -99,7 +99,7 @@ export class Arena{
         this.roundTimer.stop();
         this.playerSide.reset(); 
         this.playerSide.destroy();
-        this.botSide.reset();        
+        this.botSide.reset();       
     }    
 
     async updateScoreUI(matchOutcome){
@@ -154,18 +154,11 @@ export class Arena{
 
         this.arenaElement.appendChild(overlay);
 
-        this.finalResult=new FinalResult(overlay,this.currentScore,winnerText);
+        this.finalResult=new FinalResult(overlay,this.currentScore,winnerText,this.game.roundIdList.length,()=>this.onReturnToMenu());
         this.finalResult.playSound(finalResult);
 
         this.finalResult.setupGameReview(this.game.gameId,this.game.roundIdList,this.toast);
 
-        // setTimeout(()=>{
-        //     overlay.classList.remove("visible");
-        //     overlay.addEventListener("transitionend",()=>{
-        //         overlay.remove();
-        //         this.onReturnToMenu();
-        //     });
-        // },5000);
     }
 
 
